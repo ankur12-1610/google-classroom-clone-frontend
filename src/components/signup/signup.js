@@ -44,11 +44,13 @@ export default function Signup({ setLoggedIn }) {
                     console.log(err.response)
                     if(err.response.data.email[0] === "Email already exists!") {
                         alert.show("An account with this email already exists")
-                    } else {
-                        if(err.response.data.username[0] === "Username already exists!") {
-                            alert.show("This User name is already taken!")
-                        }
-                    }
+                    } 
+                    // else {
+                    //     // if(err.response.data.username[0] === "Username already exists!") {
+                    //     //     alert.show("This User name is already taken!")
+                    //     // }
+                    //     console.log(err.response.data)
+                    // }
                 }
 
             } else {
