@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, FloatingLabel } from 'react-bootstrap'
 import './signup.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Google from './google.png'
@@ -9,7 +9,7 @@ import { useAlert } from 'react-alert'
 // import LoginByGoogle from "../loginByGoogle/LoginByGoogle";
 import GoogleLogin from "react-google-login";
 import axios from 'axios'
-export default function Signup({ setLoggedIn }) {
+export default function Signup({ setLoggedIn, role, setRole }) {
     const alert = useAlert()
 
     // function signup(res){
@@ -103,6 +103,7 @@ export default function Signup({ setLoggedIn }) {
         const email = document.querySelector("#email").value
         const password = document.querySelector("#password").value
         const cpassword = document.querySelector("#cpassword").value
+        const myrole = document.querySelector("#role").value
         const data = {
             first_name,
             last_name,
@@ -125,6 +126,7 @@ export default function Signup({ setLoggedIn }) {
                     const res = await myaxios(options)
                     authorize(res.data.token, setLoggedIn)
                     localStorage.setItem('token', res.data.token)
+                    setRole(myrole)
                     console.log(res)
                 } catch(err) {
                     console.log(err)
@@ -154,6 +156,13 @@ export default function Signup({ setLoggedIn }) {
                     <div className="formheaders" style={{display:"flex", justifyContent:"center"}}>
                         <h2>SignUp</h2>
                     </div>
+                    <FloatingLabel controlId="floatingSelect" label="Signup as:">
+                        <Form.Select aria-label="Floating label select example" id="role">
+                            <option value="student">student</option>
+                            <option value="teacher">teacher</option>
+                        </Form.Select>
+                    </FloatingLabel>
+                    <br/>
                     <Form.Group className="mb-3" controlId="formBasicText">
                         <Form.Label>First Name: </Form.Label>
                         <Form.Control type="text" placeholder="Enter First Name" id="firstname" />
@@ -206,7 +215,7 @@ export default function Signup({ setLoggedIn }) {
                         {/* <Button variant="primary"><img src={Google} height="20px" width="20px" style={{marginRight:"2px"}} onClick={() => LoginByGoogle()}/>Signup with Google</Button> */}
                         <GoogleLogin
                         clientId="949668683105-e5m4vgrqv9dffqlleeb0ponf41t0c1eo.apps.googleusercontent.com"
-                        buttonText="Login with Google"
+                        buttonText="Sign Up with Google"
                         onSuccess={responseGoogle}
                         onFailure={responseGoogle} ></GoogleLogin>
                     </div>
