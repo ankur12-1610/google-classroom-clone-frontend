@@ -70,14 +70,15 @@ window.StudentList=[
 ]
 
 export default function Classroom() {
-    console.log(window.ClassroomTitle)
+    console.log(localStorage.ClassroomTitle)
     return (
         <div>
             <div className="ClassroomHolder"> 
-                <div className="ClassroomHeading">
-                    <h1 style={{marginBottom:"0px"}}>{window.ClassroomTitle}{"\n"}</h1>
-                    <h3>{window.ClassroomTeacher}</h3>
-                </div>
+            <div className="ClassroomHeading" style={{color:"white"}}>
+                <h1 style={{marginBottom:"0px"}}>{localStorage.ClassroomTitle}{"\n"}</h1>
+                <h3>{localStorage.ClassroomTeacher}</h3>
+                <p><a href={localStorage.ClassroomLink} style={{color:"white"}}>{localStorage.ClassroomLink}</a></p>
+            </div>
                 <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
                 <Tab eventKey="home" title="Assignments">
                     
