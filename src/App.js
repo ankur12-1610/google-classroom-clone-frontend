@@ -11,9 +11,12 @@ import Assignments from './components/assignments/Assignments';
 import AssignmentOpened from './components/assignments/assignmentOpened/AssignmentOpened';
 import { myaxios, authorize } from './connections'
 import Classroom  from './components/classroom/Classroom.js'
+// import LoginByGoogle from './components/loginByGoogle/LoginByGoogle';
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
+  const [role, setRole] = useState("student")
 
   const fetchLogin = async function() {
     if(localStorage.getItem('token')) {
@@ -25,7 +28,23 @@ function App() {
         })
         console.log(res)
         if(res.status === 200) {
-          return setLoggedIn(true)
+          try {
+            const res1 = await myaxios({
+                method: "GET",
+                url: "/auth/check/"
+            })
+            console.log(res1)
+            if(res1.data[1].is_teacher) {
+                setRole("teacher")
+                return setLoggedIn(true)
+            } else {
+                setRole("student")
+            }
+  
+          } catch(err) {
+              console.log(err)
+              console.log(err.response)
+          }
         }
       } catch(err) {
         console.log(err.response)
@@ -35,6 +54,23 @@ function App() {
           return setLoggedIn(false)
         }
       }
+
+    //   try {
+    //     const res1 = await myaxios({
+    //         method: "GET",
+    //         url: "/auth/check/"
+    //     })
+    //     console.log(res1)
+    //     if(res1.data[res1.data.length - 1].is_teacher) {
+    //         setRole("teacher")
+    //     } else {
+    //         setRole("student")
+    //     }
+
+    // } catch(err) {
+    //     console.log(err)
+    //     console.log(err.response)
+    // }
     } else {
       return setLoggedIn(false)
     }
@@ -49,7 +85,7 @@ function App() {
   if(loggedIn) {
     return (
       <div>
-        <NavBar setLoggedIn={setLoggedIn}/>
+        <NavBar setLoggedIn={setLoggedIn} role={role} setRole={setRole}/>
         <Switch>
           <Route exact path="/homePage">
             <HomePage/>
@@ -74,10 +110,10 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/login">
-            <Login setLoggedIn={setLoggedIn}/>
+            <Login setLoggedIn={setLoggedIn} role={role} setRole={setRole}/>
           </Route>
           <Route exact path="/signup">
-            <Signup setLoggedIn={setLoggedIn}/>
+            <Signup setLoggedIn={setLoggedIn} role={role} setRole={setRole}/>
           </Route>
           <Route exact path="/">
             <LandingPage/>
