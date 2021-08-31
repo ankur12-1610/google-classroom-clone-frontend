@@ -178,8 +178,8 @@ export default function Signup({ setLoggedIn, role, setRole }) {
                     </div>
                     <FloatingLabel controlId="floatingSelect" label="Signup as:">
                         <Form.Select aria-label="Floating label select example" id="role">
-                            <option value="student">student</option>
                             <option value="teacher">teacher</option>
+                            <option value="student">student</option>
                         </Form.Select>
                     </FloatingLabel>
                     <br/>
