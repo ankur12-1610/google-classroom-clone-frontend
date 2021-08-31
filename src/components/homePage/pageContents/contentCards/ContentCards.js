@@ -63,6 +63,7 @@ import React, { useEffect, useState } from 'react'
 import {Card, Button} from 'react-bootstrap'
 import "./styles/ContentCards.css"
 import { useHistory } from 'react-router-dom'
+import { myaxios } from "../../../../connections"
 // import Male from  './male.png'
 // import Female from './female.png'
 // import Pnts from './pnts.png'
@@ -73,17 +74,51 @@ export default function ContentCards({ data }) {
 
     const [changed, setChanged] = useState(false)
     const history = useHistory();
-    function handleClick(){
-        window.ClassroomTitle=data.title;
-        window.ClassroomTeacher=data.teacher;
+    async function handleClick(){
+        var options = {
+            method: 'get',
+            url: 'assignments/', 
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }
+        try {
+            const res = await myaxios(options)
+            console.log("response")
+            console.log(res.data[0]["title"]);
+            window.exp=res.data;
+            console.log(res.data[0]["teacher"]);
+            console.log(res.data[0]["deadline"]);
+            console.log(res.data[0]["score"]);
+            const temp1=[]
+            for(var i=0;i<res.data.length;i++){
+                var temp={
+                    "Topic":res.data[i]["title"],
+                    "Subject":data.title,
+                    "Due_Date":(res.data[i]["deadline"].toString()).substring(0,19),
+                    "Graded_Status":res.data[0]["score"],
+                    "PS":"Sample Problem Statement"
+                }
+                temp1.push(temp)
+            }
+            localStorage.Assignments=JSON.stringify(temp1);
+        }catch{
+
+        }
+        localStorage.ClassroomLink=data.classroom_link;
+        localStorage.ClassroomTitle=data.title;
+        localStorage.ClassroomTeacher=data.teacher;
+        // localStorage.ClassroomId = data.id
+        // localStorage.setItem('ClassroomId',data.id)
         history.push(`/Classroom`);
         setChanged(true)
-        console.log("Clicked")
+        // console.log("Clicked")
+        // console.log(data.id)
     }
     return(
         <Button as={Link} to="#" style={{background:"none", border:"none"}} >
             <div onClick={() => handleClick()}>
-            <Card style={{ width: "17rem", color:"white", borderRadius:"10%", height:"15rem" }} className="text-center profilecard" bg="dark" >
+            <Card style={{ width: "17rem", color:"white", borderRadius:"10%", minHeight:"15rem" }} className="text-center profilecard" bg="dark" >
                 <div style={{display:"flex", justifyContent:"center"}}>
                     <div style={{width:"92px", display:"flex", alignItems:"center", justifyContent:"center"}}>
                         <div style={{borderBottom:"1.5px solid white", width:"100%", marginTop:"40px"}}>
