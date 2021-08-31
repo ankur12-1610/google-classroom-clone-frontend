@@ -92,6 +92,7 @@ export default function ContentCards({ data }) {
 
             console.log(res.data[0]["score"]);
 
+
             const temp1=[]
             for(var i=0;i<res.data.length;i++){
                 var temp={
@@ -103,6 +104,7 @@ export default function ContentCards({ data }) {
                 }
                 temp1.push(temp)
             }
+
             localStorage.Assignments=JSON.stringify(temp1);
 
         }catch{
