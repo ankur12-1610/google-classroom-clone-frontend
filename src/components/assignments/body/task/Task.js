@@ -15,11 +15,11 @@ export default function Task(props) {
     // const d=JSON.parse(localStorage.Assignments)
     // console.log(d[0]["Subject"]);
         // AssignmentOpened(props);
-    const tempSuject=props.data["Subject"].toString()
-    const tempDue_Date=props.data["Due_Date"].toString()
-    const tempGraded_Status=props.data["Graded_Status"].toString()
-    const tempTopic=props.data["Topic"].toString()
-    const tempPS=props.data["PS"].toString()
+    const tempSuject=props.data["Subject"]
+    const tempDue_Date=props.data["Due_Date"]
+    const tempGraded_Status=props.data["Graded_Status"]
+    const tempTopic=props.data["Topic"]
+    const tempPS=props.data["PS"]
     // const tempID=props.data["Assignment_ID"].toString()
     // async function fetchDetails(){
     //     var options = {
